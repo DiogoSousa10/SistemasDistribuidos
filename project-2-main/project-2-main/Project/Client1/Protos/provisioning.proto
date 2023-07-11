@@ -1,0 +1,157 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "GrpcServer";
+
+package greet;
+
+service Provisioning {
+	rpc Reserve(ReserveRequest) returns (ReserveResponse);
+	rpc Activation(ActivationRequest) returns (ActivationResponse);
+	rpc Desactivation(DesactivationRequest) returns (DesactivationResponse);
+	rpc Termination(TerminationRequest) returns (TerminationResponse);
+    rpc ShowAllDomi (ShowAllRequest) returns (stream Domicilio); 
+	rpc ShowAllDomiTerminatedState (ShowAllDomiTerminatedStateRequest) returns (stream Domicilio);
+	rpc ShowAllDomiforUser (ShowAllDomiforUserRequest) returns (stream Domicilio); 
+	rpc VerifyNa (VerifyNaRequest) returns (VerifyNaResponse);
+	rpc ActivationAdmin(ActivationAdminRequest) returns (ActivationAdminResponse);
+	rpc DesactivationAdmin(DesactivationAdminRequest) returns (DesactivationAdminResponse);
+	rpc TerminationAdmin(TerminationAdminRequest) returns (TerminationAdminResponse);
+	rpc ShowAllInfoAboutUser (ShowAllInfoAboutUserRequest) returns (stream ReservaInfo);
+	rpc ShowDomiWithModali (ShowDomiWithModaliRequest) returns (stream Reserva); 
+}
+
+message ReserveRequest{
+	int32 modalidade = 1;
+	string domicilio = 2;
+	string username = 3;
+}
+
+message ReserveResponse {
+	int32 num_admin = 1;
+	string estado = 2;
+}
+
+// ****************************** //
+
+message ActivationRequest {
+	int32 num_admin = 1;
+	string username = 2;
+
+}
+
+message ActivationResponse {
+	bool can_activate = 1;
+	string estimated_time = 2;
+}
+
+// ****************************** //
+
+message DesactivationRequest {
+	int32 num_admin = 1;
+	string username = 2;
+}
+
+message DesactivationResponse {
+	bool can_deactivate = 1;
+	string estimated_time = 2;
+}
+
+// ****************************** //
+
+message TerminationRequest {
+	int32 num_admin = 1;
+	string username = 2;
+}
+
+message TerminationResponse {
+	bool can_deactivate = 1;
+	string estimated_time = 2;
+}
+
+// ****************************** //
+
+message Domicilio {
+    int32 num_admin = 1;
+    string estado = 2;
+    string nome = 3;
+}
+
+message Reserva {
+    int32 num_admin = 1;
+    string estado = 2;
+    string nome = 3;
+	int32 modalidade = 4;
+}
+
+message ShowDomiWithModaliRequest {
+	string username = 1;
+}
+
+message ShowAllRequest {
+}
+
+// ****************************** //
+
+
+message ShowAllDomiTerminatedStateRequest {
+}
+
+// ****************************** //
+
+
+message ShowAllDomiforUserRequest {
+	string username = 1;
+}
+
+// ****************************** //
+
+message VerifyNaRequest{
+	int32 na = 1;
+}
+
+message VerifyNaResponse {
+	bool allgood = 1;
+	string state = 2;
+}
+
+// ****************************** //
+
+message ActivationAdminRequest {
+	int32 na = 1;
+}
+
+message ActivationAdminResponse {
+	string estimated_time = 1;
+}
+
+// ****************************** //
+
+message DesactivationAdminRequest {
+	int32 na = 1;
+}
+
+message DesactivationAdminResponse {
+	string estimated_time = 1;
+}
+
+// ****************************** //
+// ****************************** //
+
+message ShowAllInfoAboutUserRequest {
+}
+
+message TerminationAdminRequest {
+	int32 na = 1;
+}
+
+message TerminationAdminResponse {
+	string estimated_time = 1;
+}
+message ReservaInfo {
+	string username = 1;
+	string Role = 2;
+	int32 num_admin = 3;
+	string estado = 4;
+	string nome = 5;
+	int32 modalidade = 6;
+}

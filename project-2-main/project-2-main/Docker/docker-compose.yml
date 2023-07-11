@@ -1,0 +1,24 @@
+version: '3.7'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbit-server
+    hostname: rmq
+    ports:
+      - "8080:15672"
+      - "5672:5672"
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: sql-server
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'francisco-teste-123!'
+    ports:
+      - "11433:1433"
+    volumes:
+      - sql-data:/var/opt/mssql
+      - ./db-scripts:/scripts
+
+volumes:
+  sql-data:
